@@ -7,10 +7,17 @@
     <title>Dojo Survey | Home</title>
 </head>
 <body style="min-height: 100px;border: 2px solid black;margin: 20px auto;width: 400px;padding: 20px;box-sizing: border-box;">
+    {% with messages = get_flashed_messages() %}     <!-- declare a variable called messages -->
+        {% if messages %}                            <!-- check if there are any messages -->
+            {% for message in messages %}            <!-- loop through the messages -->
+                <p>{{message}}</p>                   <!-- display each message in a paragraph tag -->
+            {% endfor %}
+        {% endif %}
+    {% endwith %}   
     <form action="/submit" method='post'>
         <div class="name" style="display: flex; align-items: center;justify-content: space-between;">
             <p>Your Name: </p>
-            <input type="text" name="full_name" style="width: 150px;">
+            <input type="text" name="name" style="width: 150px;">
         </div>
         <div class="location" style="display: flex; align-items: center;justify-content: space-between;">
             <p>Dojo Location: </p>
@@ -28,7 +35,7 @@
                 <option value="HTML & CSS">HTML & CSS</option>
             </select>
         </div>
-        <p>Comment (optional):</p>
+        <p>Comment:</p>
         <input type="text" name="comment" style="width: 100%;display: inline-block;min-height: 75px;margin-bottom: 15px;">
         <input type="submit" value="Submit">
     </form>

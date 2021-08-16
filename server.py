@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, session
 import random
+from survey import Survey
 
 app = Flask(__name__)
 app.secret_key = 'Hello World'
@@ -12,10 +13,14 @@ def surveyHome():
 @app.route('/submit', methods=['POST'])
 def submitSurvey():
     print(request.form)
-    session['name'] = request.form['full_name']
+    session['name'] = request.form['name']
     session['location'] = request.form['location']
     session['language'] = request.form['language']
     session['comment'] = request.form['comment']
+    print(request.form)
+    if not Survey.validate_survey(request.form):
+        return redirect('/')
+    Survey.create_survey(request.form)
     return redirect('/result')
 
 @app.route('/result')
